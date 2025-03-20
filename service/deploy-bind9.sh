@@ -16,8 +16,10 @@ cidr=$cidrBalanceadorCarga
 ipReverso=$(echo $ipBalanceadorCarga | sed --expression='s/^\([0-9]\{1,3\}\)\.\([0-9]\{1,3\}\)\.\([0-9]\{1,3\}\).\+$/\3.\2.\1/')
 octeto=$(echo $ipBalanceadorCarga | sed --expression='s/^\([0-9]\{1,3\}\).\+$/\1/')
 
-# Ajustar a implantação do MailHog.
-if [[ -n "$(hasPodNotRunning bind9)" && "$isBind9Enabled" == "true" ]]
+# Ajustar a implantação do Bind9.
+hasNamespace="$(kubectl get namespace bind9 --output json | jq '.kind')"
+
+if [[ (-z "$hasNamespace" || -n "$(hasPodNotRunning bind9)") && "$isBind9Enabled" != "false" ]]
 then
 echo "Implantação do servidor de nomes (Bind9)."
 cat << EOF | kubectl apply --namespace=bind9 --filename -
@@ -159,7 +161,7 @@ data:
     10  IN  PTR  nomes.$dominio.
 EOF
 echo "O Bind9 foi implantado com sucesso."
-elif [ "$isBind9Enabled" == "true" ]
+elif [ "$isBind9Enabled" != "false" ]
 then
 echo "O Bind9 já está implantado."
 fi

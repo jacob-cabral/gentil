@@ -37,7 +37,6 @@ cidrBalanceadorCarga=$ipBalanceadorCarga/32
 [ -z "$chavePrivadaSubdominio" ] && chavePrivadaSubdominio="$diretorioCertificados/$subdominio.$dominio.key"
 [ -z "$requisicaoAssinaturaCertificadoSubdominio" ] && requisicaoAssinaturaCertificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.csr"
 [ -z "$certificadoSubdominio" ] && certificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.crt"
-[ -z "$isBind9Enabled" ] && isBind9Enabled="true"
 
 # Emissão dos certificados SSL, se for o caso.
 if [[ ! -f "$certificadoACRaiz" || ! -f "$certificadoSubdominio" ]]
@@ -79,7 +78,7 @@ if [ "$hasAdministrativePrivileges" == "true" ]
 then
   setTrustedACCertificate "$dominio" "$certificadoACRaiz"
 
-  if [ "$isBind9Enabled" == "true" ]
+  if [ "$isBind9Enabled" != "false" ]
   then
     setHostAsDNSClient "$dominio" "$ipServidorNomes"
   fi
@@ -88,7 +87,7 @@ then
 else
   echo "Convém configurar o sistema operacional e o navegador para confiarem no certificado da AC Raiz ($certificadoACRaiz)."
 
-  if [ "$isBind9Enabled" == "true" ]
+  if [ "$isBind9Enabled" != "false" ]
   then
     echo "Além disso, deve ser configurada a resolução de nomes pelo servidor DNS de IP $ipServidorNomes."
   fi
