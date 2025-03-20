@@ -20,7 +20,7 @@ identificadorRede="$(docker network ls --format=json | jq --raw-output 'select(.
 
 if [ -z "$identificadorRede" ]
 then
-  identificadorRede="$(docker network create outrarede2 | cut --characters=1-12)"
+  identificadorRede="$(docker network create kind | cut --characters=1-12)"
 fi
 
 # Definição de variáveis.
