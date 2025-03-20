@@ -23,15 +23,12 @@ prefixoRede=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr
 ipBalanceadorCarga=$(echo $gateway | sed --expression='s/^\(.\+\)\(\.[0-9]\{1,3\}\)\(\.[0-9]\{1,3\}\)$/\1.100\3/g')
 cidrBalanceadorCarga=$ipBalanceadorCarga/32
 [ -z "$ipServidorNomes" ] && ipServidorNomes=$(echo $gateway | sed --expression='s/^\(.\+\)\(\.[0-9]\{1,3\}\)$/\1.53/g')
-[ -z "$diretorioCertificados" ] && diretorioCertificados=.
+[ -z "$diretorioCertificados" ] && diretorioCertificados="${OLDPWD:-.}"
 [ -z "$chavePrivadaACRaiz" ] && chavePrivadaACRaiz="$diretorioCertificados/ac.$dominio.key"
 [ -z "$certificadoACRaiz" ] && certificadoACRaiz="$diretorioCertificados/ac.$dominio.crt"
 [ -z "$chavePrivadaSubdominio" ] && chavePrivadaSubdominio="$diretorioCertificados/$subdominio.$dominio.key"
 [ -z "$requisicaoAssinaturaCertificadoSubdominio" ] && requisicaoAssinaturaCertificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.csr"
 [ -z "$certificadoSubdominio" ] && certificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.crt"
-
-# Retorno ao diretório anterior.
-cd -
 
 # Emissão dos certificados SSL, se for o caso.
 if [[ ! -f "$certificadoACRaiz" || ! -f "$certificadoSubdominio" ]]
@@ -40,9 +37,6 @@ then
 else
   echo "Os certificados das AC já existem."
 fi
-
-# Continuação das configurações a partir do diretório raiz.
-cd "${diretorioRaiz}"
 
 # Implantação do cluster Kubernetes.
 clusters=$(kind get clusters)
