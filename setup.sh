@@ -15,9 +15,17 @@ source util/set-trusted-ac-certificate.sh
 isNotNull dominio
 isNotNull subdominio
 
+# Criação da rede do cluster, se for o caso.
+identificadorRede="$(docker network ls --format=json | jq --raw-output 'select(.Name == "kind").ID')"
+
+if [ -z "$identificadorRede" ]
+then
+  identificadorRede="$(docker network create outrarede2 | cut --characters=1-12)"
+fi
+
 # Definição de variáveis.
 subdominioComHifenSemPonto=$(echo -n $subdominio | sed --expression 's/\./\-/g')
-ifname="br-$(docker network ls --format json | jq -r 'select(.Name == "kind").ID')"
+ifname="br-$identificadorRede"
 gateway=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_info[] | select(.family == "inet") | .local)')
 prefixoRede=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_info[] | select(.family == "inet") | .prefixlen)')
 ipBalanceadorCarga=$(echo $gateway | sed --expression='s/^\(.\+\)\(\.[0-9]\{1,3\}\)\(\.[0-9]\{1,3\}\)$/\1.100\3/g')
