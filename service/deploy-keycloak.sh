@@ -16,6 +16,12 @@ isNotNull subdominioComHifenSemPonto
 if [[ -z "$(isHelmChartInstalled idp keycloak)" && "$isKeycloakEnabled" == "true" ]]
 then
 echo "Implantação do Keycloak."
+
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "bitnami").name')"]
+then
+helm repo add bitnami https://charts.bitnami.com/bitnami
+fi
+
 cat << EOF | helm upgrade keycloak bitnami/keycloak --install --create-namespace --namespace=idp --version=12.2.0 --values -
 auth:
   adminUser: admin
