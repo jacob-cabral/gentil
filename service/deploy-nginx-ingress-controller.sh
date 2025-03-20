@@ -21,6 +21,10 @@ controller:
     allow-snippet-annotations: true
   ingressClassResource:
     default: true
+  service:
+    annotations:
+      metallb.universe.tf/allow-shared-ip: "key-to-shared-ip"
+    loadBalancerIP: $ipBalanceadorCarga
 EOF
 echo "O Nginx Ingress Controller foi implantado com sucesso."
 fi

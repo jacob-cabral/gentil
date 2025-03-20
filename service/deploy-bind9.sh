@@ -38,10 +38,13 @@ metadata:
   name: bind9
   labels:
     app.kubernetes.io/name: bind9
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "key-to-shared-ip"
 spec:
   selector:
     app.kubernetes.io/name: bind9
   type: LoadBalancer
+  loadBalancerIP: $ipBalanceadorCarga
   ports:
   - name: tcp
     port: 53
