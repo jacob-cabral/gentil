@@ -30,7 +30,7 @@ gateway=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_inf
 prefixoRede=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_info[] | select(.family == "inet") | .prefixlen)')
 ipBalanceadorCarga=$(echo $gateway | sed --expression='s/^\(.\+\)\(\.[0-9]\{1,3\}\)\(\.[0-9]\{1,3\}\)$/\1.100\3/g')
 cidrBalanceadorCarga=$ipBalanceadorCarga/32
-[ -z "$ipServidorNomes" ] && ipServidorNomes=$(echo $gateway | sed --expression='s/^\(.\+\)\(\.[0-9]\{1,3\}\)$/\1.53/g')
+[ -z "$ipServidorNomes" ] && ipServidorNomes="$ipBalanceadorCarga"
 [ -z "$diretorioCertificados" ] && diretorioCertificados="${OLDPWD:-.}"
 [ -z "$chavePrivadaACRaiz" ] && chavePrivadaACRaiz="$diretorioCertificados/ac.$dominio.key"
 [ -z "$certificadoACRaiz" ] && certificadoACRaiz="$diretorioCertificados/ac.$dominio.crt"
