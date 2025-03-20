@@ -15,7 +15,7 @@ if [ -z "$(isHelmChartInstalled metallb-system metallb)" ]
 then
 echo "Implantação do balanceador de carga MetalLB."
 
-if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "metallb").name')"]
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "metallb").name')" ]
 then
 helm repo add metallb https://metallb.github.io/metallb
 fi

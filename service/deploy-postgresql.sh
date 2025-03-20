@@ -10,7 +10,7 @@ if [[ -z "$(isHelmChartInstalled databases postgresql)" && "$isPostgreSQLEnabled
 then
 echo "Implantação do PostgreSQL."
 
-if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "bitnami").name')"]
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "bitnami").name')" ]
 then
 helm repo add bitnami https://charts.bitnami.com/bitnami
 fi

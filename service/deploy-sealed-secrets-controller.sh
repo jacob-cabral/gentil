@@ -10,7 +10,7 @@ if [ -z "$(isHelmChartInstalled kube-system sealed-secrets-controller)" ]
 then
   echo "Implantação do serviço controlador de Sealed Secrets."
   
-  if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "bitnami-labs").name')"]
+  if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "bitnami-labs").name')" ]
   then
     helm repo add bitnami-labs https://bitnami-labs.github.io/sealed-secrets/
   fi

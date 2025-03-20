@@ -17,7 +17,7 @@ if [ -z "$(isHelmChartInstalled cert-manager cert-manager)" ]
 then
 echo "Implantação do serviço de emissão de certificados SSL (cert-manager)."
 
-if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "jetstack").name')"]
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "jetstack").name')" ]
 then
 helm repo add jetstack https://charts.jetstack.io
 fi
