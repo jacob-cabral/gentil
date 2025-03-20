@@ -16,7 +16,12 @@ isNotNull subdominioComHifenSemPonto
 if [ -z "$(isHelmChartInstalled cert-manager cert-manager)" ]
 then
 echo "Implantação do serviço de emissão de certificados SSL (cert-manager)."
+
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "jetstack").name')"]
+then
 helm repo add jetstack https://charts.jetstack.io
+fi
+
 helm upgrade cert-manager jetstack/cert-manager --install --create-namespace --namespace=cert-manager --set=crds.enabled=true
 cat << EOF | kubectl apply --namespace=cert-manager --filename -
 apiVersion: v1

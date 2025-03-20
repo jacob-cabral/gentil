@@ -17,7 +17,12 @@ isNotNull subdominioComHifenSemPonto
 if [[ -z "$(isHelmChartInstalled harbor harbor)" && "$isHarborEnabled" == "true" ]]
 then
 echo "Implantação do serviço do Harbor."
+
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "harbor").name')"]
+then
 helm repo add harbor https://helm.goharbor.io
+fi
+
 cat << EOF | helm upgrade harbor harbor/harbor --install --create-namespace --namespace=harbor --version=1.14.0 --timeout=10m0s --values -
 database:
   internal:
