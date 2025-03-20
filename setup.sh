@@ -2,10 +2,13 @@
 # Interrompe a execução em caso de erro.
 set -e
 
+# Definição do diretório raiz das configurações.
+diretorioRaiz=$(dirname "$(realpath "$0")")
+
 # Importação de funções utilitárias.
-source util/is-not-null.sh
-source util/set-host-as-dns-client.sh
-source util/set-trusted-ac-certificate.sh
+source "${diretorioRaiz}/util/is-not-null.sh"
+source "${diretorioRaiz}/util/set-host-as-dns-client.sh"
+source "${diretorioRaiz}/util/set-trusted-ac-certificate.sh"
 
 # Validação dos dados de entrada obrigatórios.
 isNotNull dominio
@@ -34,8 +37,7 @@ else
   echo "Os certificados das AC já existem."
 fi
 
-# Definição do diretório raiz das configurações.
-diretorioRaiz=$(dirname "$(realpath "$0")")
+# Continuação das configurações a partir do diretório raiz.
 cd "${diretorioRaiz}"
 
 # Implantação do cluster Kubernetes.
