@@ -15,7 +15,12 @@ isNotNull subdominioComHifenSemPonto
 if [[ -z "$(isHelmChartInstalled monitoring loki-stack)" && "$isLokiStackEnabled" == "true" ]]
 then
 echo "Implantação dos serviços de monitoramento do cluster."
+
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "grafana").name')"]
+then
 helm repo add grafana https://grafana.github.io/helm-charts
+fi
+
 cat << EOF | helm upgrade loki-stack grafana/loki-stack --install --create-namespace --namespace=monitoring --values -
 grafana:
   enabled: true

@@ -14,6 +14,12 @@ isNotNull cidrBalanceadorCarga
 if [ -z "$(isHelmChartInstalled metallb-system metallb)" ]
 then
 echo "Implantação do balanceador de carga MetalLB."
+
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "metallb").name')"]
+then
+helm repo add metallb https://metallb.github.io/metallb
+fi
+
 helm upgrade metallb metallb/metallb --install --create-namespace --namespace metallb-system
 echo "O MetalLB foi implantado com sucesso."
 else
