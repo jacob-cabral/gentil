@@ -24,11 +24,13 @@ O cluster executado pelo Gentil possui as seguintes características:
 ## Requisitos
 Os atuais requisitos da execução do Gentil são:
 - Sistema operacional Linux, tendo sido testado na distribuição Ubuntu 24.04 LTS (Noble Numbat);
+- [curl](https://curl.se/);
+- [Docker](https://www.docker.com/);
 - [Helm](https://helm.sh/);
 - [kind](https://kind.sigs.k8s.io/);
 - [kubectl](https://kubernetes.io/docs/reference/kubectl/);
 - [kubeseal](https://github.com/bitnami-labs/sealed-secrets);
-- [Docker](https://www.docker.com/).
+- [yq](https://mikefarah.gitbook.io/yq).
 
 ## Configurações
 A execução do Gentil é parametrizada pelas configurações abaixo:
