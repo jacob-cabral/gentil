@@ -24,11 +24,13 @@ O cluster executado pelo Gentil possui as seguintes características:
 ## Requisitos
 Os atuais requisitos da execução do Gentil são:
 - Sistema operacional Linux, tendo sido testado na distribuição Ubuntu 24.04 LTS (Noble Numbat);
+- [curl](https://curl.se/);
+- [Docker](https://www.docker.com/);
 - [Helm](https://helm.sh/);
 - [kind](https://kind.sigs.k8s.io/);
 - [kubectl](https://kubernetes.io/docs/reference/kubectl/);
 - [kubeseal](https://github.com/bitnami-labs/sealed-secrets);
-- [Docker](https://www.docker.com/).
+- [yq](https://mikefarah.gitbook.io/yq).
 
 ## Configurações
 A execução do Gentil é parametrizada pelas configurações abaixo:
@@ -37,7 +39,7 @@ A execução do Gentil é parametrizada pelas configurações abaixo:
 |------|:------------:|:---------------:|----------|
 | dominio | - | Sim | Define o nome de domínio (DNS). |
 | subdominio | - | Sim | Define o nome do subdomínio (DNS). |
-| isBind9Enabled | - | Não | Define se o Bind9 deve ser implantado no cluster Kubernetes. |
+| isBind9Enabled | true | Não | Define se o Bind9 deve ser implantado no cluster Kubernetes. |
 | isHarborEnabled | - | Não | Define se o Harbor deve ser implantado no cluster Kubernetes. |
 | isKeycloakEnabled | - | Não | Define se o Keycloak deve ser implantado no cluster Kubernetes. |
 | isLokiStackEnabled | - | Não | Define se os serviços de monitoramento (Loki Stack) devem ser implantados no cluster Kubernetes. |
@@ -49,7 +51,7 @@ A execução do Gentil é parametrizada pelas configurações abaixo:
 ## Como usar?
 O arquivo `setup.sh` é o ponto de entrada da execução do Gentil. Essa execução é demonstrada abaixo:
 ```bash
-dominio=exemplo subdominio=nuvem ./setup.sh
+dominio=exemplo subdominio=nuvem organizacao=Exemplo unidadeOrganizacional=Nuvem ./setup.sh
 ```
 A execução do `setup.sh` pode ser feita a partir do diretório de checkout do Gentil ou, preferencialmente, do diretório específico para manter os arquivos dos certificados SSL, criados juntamente ao cluster Kubernetes.
 As definições dos valores das variáveis `dominio` e `subdominio` são obrigatórias. Esses valores são necessários para a configuração do servidor de nomes, a criação dos certificados SSL etc.

@@ -37,6 +37,7 @@ cidrBalanceadorCarga=$ipBalanceadorCarga/32
 [ -z "$chavePrivadaSubdominio" ] && chavePrivadaSubdominio="$diretorioCertificados/$subdominio.$dominio.key"
 [ -z "$requisicaoAssinaturaCertificadoSubdominio" ] && requisicaoAssinaturaCertificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.csr"
 [ -z "$certificadoSubdominio" ] && certificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.crt"
+[ -z "$isBind9Enabled" ] && isBind9Enabled="true"
 
 # Emissão dos certificados SSL, se for o caso.
 if [[ ! -f "$certificadoACRaiz" || ! -f "$certificadoSubdominio" ]]
