@@ -37,7 +37,7 @@ A execução do Gentil é parametrizada pelas configurações abaixo:
 |------|:------------:|:---------------:|----------|
 | dominio | - | Sim | Define o nome de domínio (DNS). |
 | subdominio | - | Sim | Define o nome do subdomínio (DNS). |
-| isBind9Enabled | - | Não | Define se o Bind9 deve ser implantado no cluster Kubernetes. |
+| isBind9Enabled | true | Não | Define se o Bind9 deve ser implantado no cluster Kubernetes. |
 | isHarborEnabled | - | Não | Define se o Harbor deve ser implantado no cluster Kubernetes. |
 | isKeycloakEnabled | - | Não | Define se o Keycloak deve ser implantado no cluster Kubernetes. |
 | isLokiStackEnabled | - | Não | Define se os serviços de monitoramento (Loki Stack) devem ser implantados no cluster Kubernetes. |
