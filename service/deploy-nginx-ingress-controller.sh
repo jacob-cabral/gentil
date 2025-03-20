@@ -10,7 +10,7 @@ if [ -z "$(isHelmChartInstalled ingress-nginx ingress-nginx)" ]
 then
 echo "Implantação do controlador de entrada HTTP e HTTPS (Nginx Ingress Controller)."
 
-if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "ingress-nginx").name')"]
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "ingress-nginx").name')" ]
 then
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 fi

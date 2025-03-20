@@ -15,7 +15,7 @@ if [[ -z "$(isHelmChartInstalled longhorn longhorn)" && "$isLonghornEnabled" == 
 then
 echo "Implantação do Longhorn."
 
-if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "longhorn").name')"]
+if [ -z "$(helm repo list --output yaml | yq '.[] | select(.name == "longhorn").name')" ]
 then
 helm repo add longhorn https://charts.longhorn.io
 fi
