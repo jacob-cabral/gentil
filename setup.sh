@@ -4,11 +4,12 @@ set -e
 
 # Definição do diretório raiz das configurações.
 diretorioRaiz=$(dirname "$(realpath "$0")")
+cd "${diretorioRaiz}"
 
 # Importação de funções utilitárias.
-source "${diretorioRaiz}/util/is-not-null.sh"
-source "${diretorioRaiz}/util/set-host-as-dns-client.sh"
-source "${diretorioRaiz}/util/set-trusted-ac-certificate.sh"
+source util/is-not-null.sh
+source util/set-host-as-dns-client.sh
+source util/set-trusted-ac-certificate.sh
 
 # Validação dos dados de entrada obrigatórios.
 isNotNull dominio
@@ -28,6 +29,9 @@ cidrBalanceadorCarga=$ipBalanceadorCarga/32
 [ -z "$chavePrivadaSubdominio" ] && chavePrivadaSubdominio="$diretorioCertificados/$subdominio.$dominio.key"
 [ -z "$requisicaoAssinaturaCertificadoSubdominio" ] && requisicaoAssinaturaCertificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.csr"
 [ -z "$certificadoSubdominio" ] && certificadoSubdominio="$diretorioCertificados/$subdominio.$dominio.crt"
+
+# Retorno ao diretório anterior.
+cd -
 
 # Emissão dos certificados SSL, se for o caso.
 if [[ ! -f "$certificadoACRaiz" || ! -f "$certificadoSubdominio" ]]
