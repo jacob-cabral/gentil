@@ -41,6 +41,7 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/name: bind9
+  type: LoadBalancer
   ports:
   - name: tcp
     port: 53
