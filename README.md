@@ -51,7 +51,7 @@ A execução do Gentil é parametrizada pelas configurações abaixo:
 ## Como usar?
 O arquivo `setup.sh` é o ponto de entrada da execução do Gentil. Essa execução é demonstrada abaixo:
 ```bash
-dominio=exemplo subdominio=nuvem ./setup.sh
+dominio=exemplo subdominio=nuvem organizacao=Exemplo unidadeOrganizacional=Nuvem ./setup.sh
 ```
 A execução do `setup.sh` pode ser feita a partir do diretório de checkout do Gentil ou, preferencialmente, do diretório específico para manter os arquivos dos certificados SSL, criados juntamente ao cluster Kubernetes.
 As definições dos valores das variáveis `dominio` e `subdominio` são obrigatórias. Esses valores são necessários para a configuração do servidor de nomes, a criação dos certificados SSL etc.
