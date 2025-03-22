@@ -16,7 +16,7 @@ cidr=$cidrBalanceadorCarga
 ipReverso=$(echo $ipBalanceadorCarga | sed --expression='s/^\([0-9]\{1,3\}\)\.\([0-9]\{1,3\}\)\.\([0-9]\{1,3\}\).\+$/\3.\2.\1/')
 octeto=$(echo $ipBalanceadorCarga | sed --expression='s/^\([0-9]\{1,3\}\).\+$/\1/')
 
-# Ajustar a implantação do Bind9.
+# FIXME: Ajustar a implantação do Bind9.
 hasNamespace="$(kubectl get namespace bind9 --output json | jq '.kind')"
 
 if [[ (-z "$hasNamespace" || -n "$(hasPodNotRunning bind9)") && "$isBind9Enabled" != "false" ]]
