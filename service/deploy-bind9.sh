@@ -52,7 +52,7 @@ spec:
     protocol: TCP
   - name: udp
     port: 53
-    targetPort: tcp
+    targetPort: udp
     protocol: UDP
 ---
 apiVersion: apps/v1
@@ -80,6 +80,23 @@ spec:
         - name: udp
           containerPort: 53
           protocol: UDP
+        volumeMounts:
+        - name: conf
+          mountPath: /etc/bind/named.conf.local
+          subPath: named.conf.local
+        - name: conf
+          mountPath: /etc/bind/named.conf.options
+          subPath: named.conf.options
+        - name: conf
+          mountPath: /etc/bind/db.$dominio
+          subPath: db.$dominio
+        - name: conf
+          mountPath: /etc/bind/db.$octeto
+          subPath: db.$octeto
+      volumes:
+      - name: conf
+        configMap:
+          name: bind9
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -93,20 +110,20 @@ data:
 
     // Consider adding the 1918 zones here, if they are not used in your
     // organization
-    //include \"/etc/bind/zones.rfc1918\";
+    //include "/etc/bind/zones.rfc1918";
 
-    zone \"$dominio\" {
+    zone "$dominio" {
       type master;
-      file \"/etc/bind/db.$dominio\";
+      file "/etc/bind/db.$dominio";
     };
 
-    zone \"$ipReverso.in-addr.arpa\" {
+    zone "$ipReverso.in-addr.arpa" {
         type master;
-        file \"/etc/bind/db.$octeto\";
+        file "/etc/bind/db.$octeto";
     };
   named.conf.options: |
     options {
-      directory \"/var/cache/bind\";
+      directory "/var/cache/bind";
 
       // If there is a firewall between you and nameservers you want
       // to talk to, you may need to fix the firewall to allow multiple
@@ -137,7 +154,7 @@ data:
     ;
     ; BIND arquivo de dados para o domínio $dominio.
     ;
-    \\\$TTL    604800
+    \$TTL    604800
     @                               IN      SOA     $dominio. root.$dominio. (
                                           1         ; Serial
                                      604800         ; Refresh
@@ -153,7 +170,7 @@ data:
     ;
     ; BIND arquivo de dados reversos para a rede.
     ;
-    \\\$TTL   604800
+    \$TTL   604800
     @   IN  SOA  nomes.$dominio. root.$dominio. (
                     1   ; Serial
          604800   ; Refresh
