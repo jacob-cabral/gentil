@@ -80,6 +80,23 @@ spec:
         - name: udp
           containerPort: 53
           protocol: UDP
+        volumeMounts:
+        - name: conf
+          mountPath: /etc/bind/named.conf.local
+          subPath: named.conf.local
+        - name: conf
+          mountPath: /etc/bind/named.conf.options
+          subPath: named.conf.options
+        - name: conf
+          mountPath: /etc/bind/db.$dominio
+          subPath: db.$dominio
+        - name: conf
+          mountPath: /etc/bind/db.$octeto
+          subPath: db.$octeto
+      volumes:
+      - name: conf
+        configMap:
+          name: bind9
 ---
 apiVersion: v1
 kind: ConfigMap
