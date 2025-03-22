@@ -52,7 +52,7 @@ spec:
     protocol: TCP
   - name: udp
     port: 53
-    targetPort: tcp
+    targetPort: udp
     protocol: UDP
 ---
 apiVersion: apps/v1
