@@ -14,7 +14,7 @@ isNotNull subdominioComHifenSemPonto
 # FIXME: Ajustar a implantação do MailHog.
 hasNamespace="$(kubectl get namespace mailhog --output json | jq '.kind')"
 
-if [[ (-z "$hasNamespace" || -n "$(hasPodNotRunning mailhog)" && "$isMailHogEnabled" == "true" ]]
+if [[ (-z "$hasNamespace" || -n "$(hasPodNotRunning mailhog)") && "$isMailHogEnabled" == "true" ]]
 then
 echo "Implantação do serviço SMTP (MailHog)."
 cat << EOF | kubectl apply --namespace=mailhog --filename -
