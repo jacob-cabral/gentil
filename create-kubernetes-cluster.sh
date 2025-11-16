@@ -19,22 +19,22 @@ apiVersion: kind.x-k8s.io/v1alpha4
 name: $subdominioComHifenSemPonto
 nodes:
   - role: control-plane
-    image: kindest/node:v1.29.12
+    image: kindest/node:v1.32.8
     extraMounts:
       - hostPath: "$certificadoACRaiz"
         containerPath: "/etc/ssl/certs/ac.$dominio.pem"
   - role: worker
-    image: kindest/node:v1.29.12
+    image: kindest/node:v1.32.8
     extraMounts:
       - hostPath: "$certificadoACRaiz"
         containerPath: "/etc/ssl/certs/ac.$dominio.pem"
   - role: worker
-    image: kindest/node:v1.29.12
+    image: kindest/node:v1.32.8
     extraMounts:
       - hostPath: "$certificadoACRaiz"
         containerPath: "/etc/ssl/certs/ac.$dominio.pem"
   - role: worker
-    image: kindest/node:v1.29.12
+    image: kindest/node:v1.32.8
     extraMounts:
       - hostPath: "$certificadoACRaiz"
         containerPath: "/etc/ssl/certs/ac.$dominio.pem"
