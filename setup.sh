@@ -25,11 +25,11 @@ fi
 
 # Definição de variáveis.
 subdominioComHifenSemPonto=$(echo -n $subdominio | sed --expression 's/\./\-/g')
-ifname="br-$identificadorRede"
-gateway=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_info[] | select(.family == "inet") | .local)')
-prefixoRede=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_info[] | select(.family == "inet") | .prefixlen)')
-ipBalanceadorCarga=$(echo $gateway | sed --expression='s/^\(.\+\)\(\.[0-9]\{1,3\}\)\(\.[0-9]\{1,3\}\)$/\1.100\3/g')
-cidrBalanceadorCarga=$ipBalanceadorCarga/32
+[ -z "$ifname" ] && ifname="br-$identificadorRede"
+[ -z "$gateway" ] && gateway=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_info[] | select(.family == "inet") | .local)')
+[ -z "$prefixoRede" ] && prefixoRede=$(ip -json address show $ifname | jq --raw-output 'limit(1; .[].addr_info[] | select(.family == "inet") | .prefixlen)')
+[ -z "$ipBalanceadorCarga" ] && ipBalanceadorCarga=$(echo $gateway | sed --expression='s/^\(.\+\)\(\.[0-9]\{1,3\}\)\(\.[0-9]\{1,3\}\)$/\1.100\3/g')
+[ -z "$cidrBalanceadorCarga" ] && cidrBalanceadorCarga=$ipBalanceadorCarga/32
 [ -z "$ipServidorNomes" ] && ipServidorNomes="$ipBalanceadorCarga"
 [ -z "$diretorioCertificados" ] && diretorioCertificados="${OLDPWD:-.}"
 [ -z "$chavePrivadaACRaiz" ] && chavePrivadaACRaiz="$diretorioCertificados/ac.$dominio.key"
